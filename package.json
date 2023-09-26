@@ -4,9 +4,12 @@
   },
   "name": "auth-service",
   "version": "1.0.0",
-  "description" : "This is user management service",
+  "description": "This is user management service",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.7.0",
+    "typescript": "^5.2.2"
+  },
   "scripts": {
     "dev": "node src/server.js"
   },
