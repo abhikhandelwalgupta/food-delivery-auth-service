@@ -8,13 +8,19 @@
   "main": "index.js",
   "devDependencies": {
     "@types/node": "^20.7.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
     "prettier": "3.0.3",
     "typescript": "^5.2.2"
   },
   "scripts": {
     "dev": "node src/server.js",
     "format:check": "prettier . --check",
-    "format:fix": "prettier . --write"
+    "format:fix": "prettier . --write",
+    "lint:fix" : "eslint . fix",
+    "lint" : "eslint . "
   },
   "author": "Abhishek khandelwal <abhishekkhandelwal1212@gmail.com>",
   "license": "ISC"
