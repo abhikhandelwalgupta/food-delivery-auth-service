@@ -24,6 +24,10 @@ describe("POST", () => {
             const response = await request(app).post("/auth/register").send(userData);
 
             expect((response.headers as Record<string, string>)['content-type']).toEqual(expect.stringContaining("json"))
+        });
+
+        it("should persist the user in the database ", () => {
+
         })
     });
 });
