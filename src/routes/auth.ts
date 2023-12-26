@@ -7,8 +7,8 @@ import { User } from "../entity/User";
 
 const router = express.Router();
 
-const userRepository = AppDataSource.getRepository(User)
-const userService = new UserService(userRepository)
+const userRepository = AppDataSource.getRepository(User);
+const userService = new UserService(userRepository);
 const authControlloer = new AuthController(userService);
 
 router.post("/register", (req, res) => authControlloer.register(req, res));
