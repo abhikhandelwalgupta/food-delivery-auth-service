@@ -4,6 +4,7 @@ import { AppDataSource } from "../../src/config/data-source";
 import { DataSource } from "typeorm";
 //import { truncateTables } from "../utils/index";
 import { User } from "../../src/entity/User";
+import { Roles } from "../../src/constants";
 
 describe("POST /auth/register", () => {
   let connection: DataSource;
@@ -85,7 +86,7 @@ describe("POST /auth/register", () => {
       const userRepository = connection.getRepository(User);
       const users = await userRepository.find();
       expect(users[0]).toHaveProperty("role")
-      expect(users[0].role).toBe("customer");
+      expect(users[0].role).toBe(Roles.CUSTOMER);
 
     })
   });
