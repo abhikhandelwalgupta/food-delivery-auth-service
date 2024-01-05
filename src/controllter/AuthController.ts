@@ -10,10 +10,10 @@ export class AuthController {
     this.userService = userService;
   }
   async register(req: RegisterUserRequest, res: Response, next: NextFunction) {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
     this.logger.debug("New request to register a user ,", { firstName, lastName, email })
     try {
-      const user = await this.userService.create({ firstName, lastName, email, password });
+      const user = await this.userService.create({ firstName, lastName, email, password, role });
       this.logger.info("User has been created ,", { id: user.id })
       res.status(201).json();
     } catch (err) {

@@ -2,7 +2,7 @@ import request from "supertest";
 import app from "../../src/app";
 import { AppDataSource } from "../../src/config/data-source";
 import { DataSource } from "typeorm";
-import { truncateTables } from "../utils";
+//import { truncateTables } from "../utils/index";
 import { User } from "../../src/entity/User";
 
 describe("POST /auth/register", () => {
@@ -13,7 +13,9 @@ describe("POST /auth/register", () => {
   });
 
   beforeEach(async () => {
-    await truncateTables(connection);
+    await connection.dropDatabase();
+    await connection.synchronize();
+    // await truncateTables(connection);
   });
 
   afterAll(async () => {
@@ -27,6 +29,7 @@ describe("POST /auth/register", () => {
         lastName: "Khandelwal",
         email: "abhishekkhandelwal1212@gmail.com",
         password: "secret",
+        role: "customer"
       };
       const response = await request(app).post("/auth/register").send(userData);
       expect(response.statusCode).toBe(201);
@@ -38,6 +41,7 @@ describe("POST /auth/register", () => {
         lastName: "Khandelwal",
         email: "abhishekkhandelwal1212@gmail.com",
         password: "secret",
+        role: "customer"
       };
       const response = await request(app).post("/auth/register").send(userData);
 
@@ -47,12 +51,12 @@ describe("POST /auth/register", () => {
     });
 
     it("should persist the user in the database ", async () => {
-      jest.setTimeout(10000);
       const userData = {
         firstName: "Abhishek",
         lastName: "Khandelwal",
         email: "abhishekkhandelwal1212@gmail.com",
         password: "abhishek",
+        role: "customer"
       };
 
       await request(app).post("/auth/register").send(userData);
@@ -64,5 +68,25 @@ describe("POST /auth/register", () => {
       expect(users[0].lastName).toBe(userData.lastName);
       expect(users[0].email).toBe(userData.email);
     });
+
+
+    it("should assign a customer role ", async () => {
+      const userData = {
+        firstName: "Abhishek",
+        lastName: "Khandelwal",
+        email: "abhishekkhandelwal1212@gmail.com",
+        password: "secret",
+        role: "customer"
+      };
+      await request(app).post("/auth/register").send(userData);
+
+      //Assert
+
+      const userRepository = connection.getRepository(User);
+      const users = await userRepository.find();
+      expect(users[0]).toHaveProperty("role")
+      expect(users[0].role).toBe("customer");
+
+    })
   });
 });

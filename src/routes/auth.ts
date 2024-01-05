@@ -9,7 +9,7 @@ import logger from "../config/logger";
 const router = express.Router();
 
 const userRepository = AppDataSource.getRepository(User);
-const userService = new UserService(userRepository);
+const userService = new UserService(userRepository, logger);
 
 const authControlloer = new AuthController(userService, logger);
 
