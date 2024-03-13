@@ -9,9 +9,7 @@ export const truncateTables = async (connection: DataSource) => {
   }
 };
 
-
 export const isJwt = (token: string | null): boolean => {
-
   if (token === null) {
     return false;
   }
@@ -19,11 +17,11 @@ export const isJwt = (token: string | null): boolean => {
   if (parts.length !== 3) return false;
 
   try {
-    parts.forEach(part => {
+    parts.forEach((part) => {
       Buffer.from(part, "base64").toString("utf8");
-    })
+    });
     return true;
   } catch (err) {
     return false;
   }
-}
+};

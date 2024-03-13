@@ -14,6 +14,11 @@ const userService = new UserService(userRepository, logger);
 
 const authControlloer = new AuthController(userService, logger);
 
-router.post("/register", registerValidator, (req: Request, res: Response, next: NextFunction) => authControlloer.register(req, res, next));
+router.post(
+  "/register",
+  registerValidator,
+  (req: Request, res: Response, next: NextFunction) =>
+    authControlloer.register(req, res, next),
+);
 
 export default router;
