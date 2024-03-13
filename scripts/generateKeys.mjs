@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-console */
 import crypto from "crypto";
 import fs from "fs";
 
@@ -16,8 +14,7 @@ const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
   },
 });
 
-console.log("public Key", publicKey);
-console.log("private key", privateKey);
+
 
 fs.writeFileSync("certs/private.pem", privateKey);
 fs.writeFileSync("certs/public.pem", publicKey);
