@@ -5,6 +5,7 @@ import { DataSource } from "typeorm";
 //import { truncateTables } from "../utils/index";
 import { User } from "../../src/entity/User";
 import { Roles } from "../../src/constants";
+import { isJwt } from "./../utils";
 
 describe("POST /auth/register", () => {
   let connection: DataSource;
@@ -171,7 +172,53 @@ describe("POST /auth/register", () => {
 
       const response = await request(app).post("/auth/register").send(userData)
       expect(response.statusCode).toBe(400)
-    })
+    });
+
+    it("should return the access token and referce token inside a cookie ", async () => {
+      const userData = {
+        firstName: "Abhi",
+        lastName: "Kumar",
+        password: "abhi8385",
+        email: "abhishekkhandelwal1212@gmail.com"
+      };
+
+      const response = await request(app).post("/auth/register").send(userData);
+
+
+      //Assert
+      interface Headers {
+        ['set-cookie']: string[]
+      }
+      let accessToken = null;
+      let refreshToken = null;
+      const cookies = (response.header as Headers)['set-cookie'] || [];
+
+
+
+
+      cookies.forEach((cookie) => {
+        if (cookie.startsWith('accessToken=')) {
+          accessToken = cookie.split(";")[0].split("=")[1]
+        }
+
+        if (cookie.startsWith("refreshToken=")) {
+          refreshToken = cookie.split(";")[0].split("=")[1]
+        }
+
+      });
+
+
+
+
+      expect(accessToken).not.toBeNull();
+
+      expect(refreshToken).not.toBeNull();
+
+      expect(isJwt(accessToken)).toBeTruthy()
+      expect(isJwt(refreshToken)).toBeTruthy()
+
+
+    });
   });
 
   describe("Fields are not in proper format", () => {
