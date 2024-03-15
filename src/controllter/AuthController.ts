@@ -45,7 +45,7 @@ export class AuthController {
       const accessToken = this.tokenService.generateAccessToken(payload);
       //Persist the refresh token
 
-      const newRefreshToken = await this.tokenService.persistRefreshToken(user)
+      const newRefreshToken = await this.tokenService.persistRefreshToken(user);
       const refreshToken = this.tokenService.generateRefreshToken({
         ...payload,
         id: String(newRefreshToken.id),
