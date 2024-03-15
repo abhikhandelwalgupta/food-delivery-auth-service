@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import request from "supertest";
 import app from "../../src/app";
 import { AppDataSource } from "../../src/config/data-source";
@@ -6,6 +7,7 @@ import { DataSource } from "typeorm";
 import { User } from "../../src/entity/User";
 import { Roles } from "../../src/constants";
 import { isJwt } from "./../utils";
+import { RefreshToken } from "../../src/entity/RefreshToken";
 
 describe("POST /auth/register", () => {
   let connection: DataSource;
@@ -207,10 +209,30 @@ describe("POST /auth/register", () => {
       expect(isJwt(accessToken)).toBeTruthy();
       expect(isJwt(refreshToken)).toBeTruthy();
     });
+
+    it("should store the referce token in the database", async () => {
+      const userData = {
+        firstName: "Abhi",
+        lastName: "Kumar",
+        password: "abhi8385",
+        email: "abhishekkhandelwal1212@gmail.com",
+      };
+
+      const response = await request(app).post("/auth/register").send(userData);
+
+      //Assert
+      const refreshTokenRepo = connection.getRepository(RefreshToken)
+
+
+      const tokens = await refreshTokenRepo.createQueryBuilder("refreshToken").where("refreshToken.userId = :userId", { userId: (response.body as Record<string, string>).id }).getMany();
+
+      expect(tokens).toHaveLength(1)
+
+    })
   });
 
   describe("Fields are not in proper format", () => {
-    it("shold trim the email field ", async () => {
+    it("should trim the email field ", async () => {
       const userData = {
         firstName: "John",
         lastName: "Doe",
