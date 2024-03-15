@@ -221,14 +221,17 @@ describe("POST /auth/register", () => {
       const response = await request(app).post("/auth/register").send(userData);
 
       //Assert
-      const refreshTokenRepo = connection.getRepository(RefreshToken)
+      const refreshTokenRepo = connection.getRepository(RefreshToken);
 
+      const tokens = await refreshTokenRepo
+        .createQueryBuilder("refreshToken")
+        .where("refreshToken.userId = :userId", {
+          userId: (response.body as Record<string, string>).id,
+        })
+        .getMany();
 
-      const tokens = await refreshTokenRepo.createQueryBuilder("refreshToken").where("refreshToken.userId = :userId", { userId: (response.body as Record<string, string>).id }).getMany();
-
-      expect(tokens).toHaveLength(1)
-
-    })
+      expect(tokens).toHaveLength(1);
+    });
   });
 
   describe("Fields are not in proper format", () => {

@@ -12,7 +12,7 @@ const router = express.Router();
 
 const userRepository = AppDataSource.getRepository(User);
 const userService = new UserService(userRepository, logger);
-const tokenService = new TokenService()
+const tokenService = new TokenService();
 const authControlloer = new AuthController(userService, logger, tokenService);
 
 router.post(
