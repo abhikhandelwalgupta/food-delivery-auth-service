@@ -10,7 +10,7 @@ export class UserService {
   constructor(
     private userRespository: Repository<User>,
     private logger: Logger,
-  ) { }
+  ) {}
 
   async create({ firstName, lastName, email, password }: UserData) {
     this.logger.debug("inside user service");
@@ -38,7 +38,7 @@ export class UserService {
   }
   async findById(id: number) {
     return await this.userRespository.findOne({
-      where: { id: id }
-    })
+      where: { id: id },
+    });
   }
 }
