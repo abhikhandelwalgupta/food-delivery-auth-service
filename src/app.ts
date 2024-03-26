@@ -3,8 +3,9 @@ import express, { NextFunction, Request, Response } from "express";
 import { HttpError } from "http-errors";
 import logger from "./config/logger";
 import authRouter from "./routes/auth";
+import cookieParse from "cookie-parser"
 const app = express();
-
+app.use(cookieParse())
 app.use(express.json());
 app.use("/auth", authRouter);
 
