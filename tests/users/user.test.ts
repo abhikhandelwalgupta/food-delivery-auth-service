@@ -99,7 +99,6 @@ describe("POST /auth/register", () => {
       );
     });
 
-
     it("Should  return 401 status if token not exists ", async () => {
       //Register User
 
@@ -115,10 +114,9 @@ describe("POST /auth/register", () => {
 
       //Generate Token
 
-      const response = await request(app)
-        .get("/auth/self").send();
+      const response = await request(app).get("/auth/self").send();
 
-      expect(response.statusCode).toBe(401)
+      expect(response.statusCode).toBe(401);
     });
   });
 });
