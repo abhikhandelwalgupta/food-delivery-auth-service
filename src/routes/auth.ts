@@ -10,6 +10,7 @@ import { TokenService } from "../services/TokenService";
 import { RefreshToken } from "../entity/RefreshToken";
 import authenticate from "../middlewares/authenticate";
 import { AuthRequest } from "../types";
+import validateRefreshToken from "../middlewares/validateRefreshToken";
 
 const router = express.Router();
 
@@ -28,6 +29,10 @@ router.post(
 
 router.get("/self", authenticate, (req: Request, res: Response) =>
   authControlloer.self(req as AuthRequest, res),
+);
+
+router.post("/refresh", validateRefreshToken, (req: Request, res: Response, next: NextFunction) =>
+  authControlloer.refresh(req as AuthRequest, res, next),
 );
 
 export default router;

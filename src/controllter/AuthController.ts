@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { NextFunction, Response } from "express";
 import { AuthRequest, RegisterUserRequest } from "../types";
 import { UserService } from "../services/UserService";
@@ -5,6 +6,7 @@ import { Logger } from "winston";
 import { validationResult } from "express-validator";
 import { JwtPayload } from "jsonwebtoken";
 import { TokenService } from "../services/TokenService";
+import createHttpError from "http-errors";
 
 export class AuthController {
   userService: UserService;
@@ -75,5 +77,52 @@ export class AuthController {
   async self(req: AuthRequest, res: Response) {
     const user = await this.userService.findById(Number(req.auth.sub));
     return res.json({ ...user, password: undefined });
+  }
+
+  async refresh(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const payload: JwtPayload = {
+        sub: req.auth.sub,
+        role: req.auth.role,
+      }
+
+      const user = await this.userService.findById(Number(req.auth.sub))
+
+      if (!user) {
+        const error = createHttpError(401, 'Invalid token')
+        next(error)
+        return
+      }
+
+      const accessToken = this.tokenService.generateAccessToken(payload);
+      const newRefreshToken = await this.tokenService.persistRefreshToken(user);
+
+      // Delete old Refresh token
+      await this.tokenService.deleteRefreshToken(Number(req.auth.id));
+
+      const refreshToken = this.tokenService.generateRefreshToken({
+        ...payload,
+        id: String(newRefreshToken.id),
+      });
+      res.cookie("accessToken", accessToken, {
+        domain: "localhost",
+        sameSite: "strict",
+        maxAge: 1000 * 60 * 60,
+        httpOnly: true,
+      });
+
+      res.cookie("refreshToken", refreshToken, {
+        domain: "localhost",
+        sameSite: "strict",
+        maxAge: 60 * 60 * 24 * 7,
+        httpOnly: true,
+      });
+
+      this.logger.info("User had been logged in", { id: user.id })
+      res.json({ id: user.id });
+    } catch (err) {
+      next(err)
+      return;
+    }
   }
 }
