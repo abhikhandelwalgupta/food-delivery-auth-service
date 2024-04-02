@@ -16,8 +16,6 @@ export interface AuthRequest extends Request {
     role: number;
     id?: string;
   };
-
-
 }
 
 export type AuthCookie = {
@@ -25,7 +23,6 @@ export type AuthCookie = {
   refreshToken: string;
 };
 
-
 export interface IRefreshTokenPayload {
-  id: string
+  id: string;
 }

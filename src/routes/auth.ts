@@ -31,8 +31,11 @@ router.get("/self", authenticate, (req: Request, res: Response) =>
   authControlloer.self(req as AuthRequest, res),
 );
 
-router.post("/refresh", validateRefreshToken, (req: Request, res: Response, next: NextFunction) =>
-  authControlloer.refresh(req as AuthRequest, res, next),
+router.post(
+  "/refresh",
+  validateRefreshToken,
+  (req: Request, res: Response, next: NextFunction) =>
+    authControlloer.refresh(req as AuthRequest, res, next),
 );
 
 export default router;

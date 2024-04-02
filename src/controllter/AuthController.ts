@@ -84,14 +84,14 @@ export class AuthController {
       const payload: JwtPayload = {
         sub: req.auth.sub,
         role: req.auth.role,
-      }
+      };
 
-      const user = await this.userService.findById(Number(req.auth.sub))
+      const user = await this.userService.findById(Number(req.auth.sub));
 
       if (!user) {
-        const error = createHttpError(401, 'Invalid token')
-        next(error)
-        return
+        const error = createHttpError(401, "Invalid token");
+        next(error);
+        return;
       }
 
       const accessToken = this.tokenService.generateAccessToken(payload);
@@ -118,10 +118,10 @@ export class AuthController {
         httpOnly: true,
       });
 
-      this.logger.info("User had been logged in", { id: user.id })
+      this.logger.info("User had been logged in", { id: user.id });
       res.json({ id: user.id });
     } catch (err) {
-      next(err)
+      next(err);
       return;
     }
   }
