@@ -39,7 +39,8 @@ router.post(
     authControlloer.refresh(req as AuthRequest, res, next),
 );
 
-router.post("/logout",
+router.post(
+  "/logout",
   authenticate,
   parseRefreshToken,
   (req: Request, res: Response, next: NextFunction) =>
