@@ -33,6 +33,12 @@ export class UserService {
       password: hashPassword,
       role: Roles.CUSTOMER,
     });
+
     return user;
+  }
+  async findById(id: number) {
+    return await this.userRespository.findOne({
+      where: { id: id },
+    });
   }
 }
