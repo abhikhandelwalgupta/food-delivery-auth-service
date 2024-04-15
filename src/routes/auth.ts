@@ -21,8 +21,13 @@ const userRepository = AppDataSource.getRepository(User);
 const userService = new UserService(userRepository, logger);
 const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
 const tokenService = new TokenService(refreshTokenRepository);
-const credentialService = new CredentialService()
-const authControlloer = new AuthController(userService, logger, tokenService ,credentialService );
+const credentialService = new CredentialService();
+const authControlloer = new AuthController(
+  userService,
+  logger,
+  tokenService,
+  credentialService,
+);
 
 router.post(
   "/register",
@@ -30,7 +35,6 @@ router.post(
   (req: Request, res: Response, next: NextFunction) =>
     authControlloer.register(req, res, next),
 );
-
 
 router.post(
   "/login",
