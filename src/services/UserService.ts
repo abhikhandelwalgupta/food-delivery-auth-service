@@ -10,7 +10,7 @@ export class UserService {
   constructor(
     private userRespository: Repository<User>,
     private logger: Logger,
-  ) {}
+  ) { }
 
   async create({ firstName, lastName, email, password }: UserData) {
     this.logger.debug("inside user service");
@@ -40,5 +40,11 @@ export class UserService {
     return await this.userRespository.findOne({
       where: { id: id },
     });
+  }
+
+  async findByEmail(email: string) {
+    return await this.userRespository.findOne({
+      where: { email: email }
+    })
   }
 }
