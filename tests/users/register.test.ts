@@ -1,13 +1,12 @@
-/* eslint-disable no-console */
+
 import request from "supertest";
+import { DataSource } from "typeorm";
 import app from "../../src/app";
 import { AppDataSource } from "../../src/config/data-source";
-import { DataSource } from "typeorm";
-//import { truncateTables } from "../utils/index";
-import { User } from "../../src/entity/User";
 import { Roles } from "../../src/constants";
-import { isJwt } from "./../utils";
 import { RefreshToken } from "../../src/entity/RefreshToken";
+import { User } from "../../src/entity/User";
+import { isJwt } from "./../utils";
 
 describe("POST /auth/register", () => {
   let connection: DataSource;

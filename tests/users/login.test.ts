@@ -1,12 +1,8 @@
-/* eslint-disable no-console */
 import request from "supertest";
 import app from "../../src/app";
 import { AppDataSource } from "../../src/config/data-source";
 import { DataSource } from "typeorm";
-//import { truncateTables } from "../utils/index";
-/*import { User } from "../../src/entity/User";
-import { Roles } from "../../src/constants";
-*/
+
 describe("POST /auth/register", () => {
   let connection: DataSource;
 
@@ -43,13 +39,33 @@ describe("POST /auth/register", () => {
       expect(response.statusCode).toBe(400);
     });
 
-    // it("should login the user ", async () => {
-    //     const userData = {
-    //         email: "abhishekkhandelwal1212@gmail.com",
-    //         password: "abhi8385",
-    //     };
-    //     const response = await request(app).post("/auth/login").send(userData);
-    //     expect(response.statusCode).toBe(200);
-    // });
+    /* it("should login the user ", async () => {
+ 
+       const saltRound = 10;
+       let password: string = "abhi8385"
+       password = await bcrypt.hash(password, saltRound);
+       // const userData = {
+       //   email: "abhishekkhandelwal1212@gmail.com",
+       //   password,
+       // };
+ 
+       const userData = {
+         firstName: "Abhishek",
+         lastName: "Khandelwal",
+         email: "abhishekkhandelwal122@gmail.com",
+         password,
+         role: "customer",
+       };
+ 
+ 
+       const userRepository = connection.getRepository(User);
+ 
+       await userRepository.save(userData);
+ 
+      
+ 
+       const response = await request(app).post("/auth/login").send({ email: userData.email, password: password });
+       expect(response.statusCode).toBe(200);
+     });*/
   });
 });
