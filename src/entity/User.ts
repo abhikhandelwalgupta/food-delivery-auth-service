@@ -23,5 +23,4 @@ export class User {
 
   @ManyToOne(() => Tenant)
   tenant: Tenant | null;
-
 }

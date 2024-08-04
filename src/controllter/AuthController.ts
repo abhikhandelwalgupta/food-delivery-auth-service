@@ -70,8 +70,8 @@ export class AuthController {
 
       res.status(201).json(user);
     } catch (err) {
-      console.log("Error :- ",err);
-      
+      console.log("Error :- ", err);
+
       next(err);
       return;
     }
