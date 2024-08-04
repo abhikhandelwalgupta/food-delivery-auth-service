@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { NextFunction, Response } from "express";
 import { AuthRequest, RegisterUserRequest } from "../types";
 import { UserService } from "../services/UserService";
@@ -69,6 +70,8 @@ export class AuthController {
 
       res.status(201).json(user);
     } catch (err) {
+      console.log("Error :- ",err);
+      
       next(err);
       return;
     }
