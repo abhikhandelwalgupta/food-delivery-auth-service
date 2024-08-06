@@ -2,25 +2,23 @@ import { Tenant } from "../entity/Tenant";
 import { ITenant, TenantQueryParams } from "../types";
 import { Repository } from "typeorm";
 export class TenantService {
-  constructor(private tenantRepository: Repository<Tenant>) { }
+  constructor(private tenantRepository: Repository<Tenant>) {}
   async create(tenantData: ITenant) {
     return await this.tenantRepository.save(tenantData);
   }
 
   async findById(tenantId: number) {
-    return await this.tenantRepository.findOne({ where: { id: tenantId } })
+    return await this.tenantRepository.findOne({ where: { id: tenantId } });
   }
-
 
   async getAll(validatedQuery: TenantQueryParams) {
     const queryBuilder = this.tenantRepository.createQueryBuilder("tenant");
 
     if (validatedQuery.q) {
       const searchTerm = `%${validatedQuery.q}%`;
-      queryBuilder.where(
-        "CONCAT(tenant.name, ' ', tenant.address) ILike :q",
-        { q: searchTerm },
-      );
+      queryBuilder.where("CONCAT(tenant.name, ' ', tenant.address) ILike :q", {
+        q: searchTerm,
+      });
     }
 
     const result = await queryBuilder
@@ -31,12 +29,11 @@ export class TenantService {
     return result;
   }
 
-
   async updateData(id: number, tenantData: ITenant) {
-    return await this.tenantRepository.update(id, tenantData)
+    return await this.tenantRepository.update(id, tenantData);
   }
 
-  async deleteById(tenantId:number) {
-    return await this.tenantRepository.delete({id:tenantId})
+  async deleteById(tenantId: number) {
+    return await this.tenantRepository.delete({ id: tenantId });
   }
 }

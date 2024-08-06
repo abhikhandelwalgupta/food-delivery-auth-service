@@ -58,4 +58,3 @@ export interface TenantQueryParams {
   perPage: number;
   currentPage: number;
 }
-
