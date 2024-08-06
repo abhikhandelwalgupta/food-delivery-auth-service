@@ -5,14 +5,13 @@ import { AppDataSource } from "../../src/config/data-source";
 import { DataSource } from "typeorm";
 import request from "supertest";
 import app from "../../src/app";
-import { Tenant } from "../../src/entity/Tenant";
-import { Roles } from "../../src/constants";
+// import { Tenant } from "../../src/entity/Tenant";
+// import { Roles } from "../../src/constants";
 
 describe("POST /tenants", () => {
   describe("POST /tenants", () => {
     let connection: DataSource;
-    let jwks: ReturnType<typeof createJWKSMock>;
-    let adminToken: string;
+
 
     beforeAll(async () => {
       connection = await AppDataSource.initialize();
@@ -28,6 +27,17 @@ describe("POST /tenants", () => {
       await connection.destroy();
     });
 
-    describe("Give all fields", () => {});
+    describe("Give all fields", () => {
+      it("should return a 201 status code", async () => {
+        const tenantData = {
+          name: "Tenant name",
+          address: "Jaipur"
+        }
+        const response = await request(app).post("/tenants").send(tenantData);
+
+
+        expect(response.statusCode).toBe(201)
+      })
+    });
   });
 });
