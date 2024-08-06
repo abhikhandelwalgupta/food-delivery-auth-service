@@ -12,7 +12,6 @@ describe("POST /tenants", () => {
   describe("POST /tenants", () => {
     let connection: DataSource;
 
-
     beforeAll(async () => {
       connection = await AppDataSource.initialize();
     });
@@ -31,13 +30,12 @@ describe("POST /tenants", () => {
       it("should return a 201 status code", async () => {
         const tenantData = {
           name: "Tenant name",
-          address: "Jaipur"
-        }
+          address: "Jaipur",
+        };
         const response = await request(app).post("/tenants").send(tenantData);
 
-
-        expect(response.statusCode).toBe(201)
-      })
+        expect(response.statusCode).toBe(201);
+      });
     });
   });
 });
