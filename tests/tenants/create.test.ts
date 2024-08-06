@@ -34,7 +34,7 @@ describe("POST /tenants", () => {
 
   afterEach(() => {
     jwks.stop();
-  })
+  });
 
   describe("Give all fields", () => {
     it("should return a 401 status code", async () => {
