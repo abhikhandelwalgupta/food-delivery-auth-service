@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 //import createError from "http-errors";
 import app from "./app";
 import { Config } from "./config";
@@ -12,7 +13,6 @@ const startServer = async () => {
     logger.info("Database connection established successfully.");
     app.listen(PORT, () => logger.info(`Listening on port  ${PORT}`));
   } catch (error) {
-    // eslint-disable-next-line no-console
     if (error instanceof Error) {
       logger.error(error);
       process.exit(1);
