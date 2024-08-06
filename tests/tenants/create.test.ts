@@ -69,11 +69,10 @@ describe("POST /tenants", () => {
     });
 
     it("should return 403 if user is not an admin", async () => {
-
       const managerToken = jwks.token({
         sub: "1",
-        role: Roles.MANAGER
-      })
+        role: Roles.MANAGER,
+      });
       const tenantData = {
         name: "Abhishek",
         address: "Jaipur",
@@ -88,8 +87,6 @@ describe("POST /tenants", () => {
       const tenants = await tenantRepository.find();
 
       expect(tenants).toHaveLength(0);
-
-
     });
   });
 });

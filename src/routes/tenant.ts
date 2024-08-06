@@ -16,6 +16,6 @@ const tenantRepository = AppDataSource.getRepository(Tenant);
 const tenantService = new TenantService(tenantRepository);
 const tenantController = new TenantController(tenantService, logger);
 router.post("/", authenticate, canAccess([Roles.ADMIN]), (req, res, next) =>
-    tenantController.create(req, res, next),
+  tenantController.create(req, res, next),
 );
 export default router;
