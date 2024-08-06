@@ -37,12 +37,11 @@ describe("POST /tenants", () => {
         await request(app).post("/tenants").send(tenantData);
 
         const tenantRepository = connection.getRepository(Tenant);
-        const tenants = await tenantRepository.find()
-
+        const tenants = await tenantRepository.find();
 
         expect(tenants).toHaveLength(1);
         expect(tenants[0].name).toBe(tenantData.name);
-        expect(tenants[0].address).toBe(tenantData.address)
+        expect(tenants[0].address).toBe(tenantData.address);
       });
     });
   });

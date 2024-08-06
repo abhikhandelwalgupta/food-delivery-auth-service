@@ -28,10 +28,10 @@ export interface IRefreshTokenPayload {
 }
 
 export interface ITenant {
-  name: string,
-  address: string
+  name: string;
+  address: string;
 }
 
 export interface CreateTenantRequest extends Request {
-  body: ITenant
+  body: ITenant;
 }
