@@ -6,6 +6,7 @@ import app from "../../src/app";
 import { Tenant } from "../../src/entity/Tenant";
 // import { Tenant } from "../../src/entity/Tenant";
 import { Roles } from "../../src/constants";
+// import { createTenant } from "../utils";
 
 describe("POST /tenants", () => {
   let connection: DataSource;
@@ -88,5 +89,16 @@ describe("POST /tenants", () => {
 
       expect(tenants).toHaveLength(0);
     });
+
+    // it("tenants should be delete from database", async () => {
+    //   const tenantDate = await createTenant(connection.getRepository(Tenant));
+
+    //   await request(app).post(`/tenants/deleteTenant/1`).set("Cookie", [`accessToken=${adminToken}`]).send();
+    //   // const response = request(app).get(`getTenants/${tenant.id}`).set("Cookie", [`accessToken=${adminToken}`]).send();
+    //   //const tenantRepository = connection.getRepository(Tenant);
+    //   //const tenant = tenantRepository.findOne({ where: { id: tenantDate.id } })
+
+    //   expect(tenantDate).toHaveLength(1);
+    // })
   });
 });
