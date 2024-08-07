@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use("/auth", authRouter);
 app.use("/tenants", tenantRouter);
-app.use("/users",userRouter)
+app.use("/users", userRouter);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {

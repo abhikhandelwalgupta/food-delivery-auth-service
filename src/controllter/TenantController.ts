@@ -16,7 +16,6 @@ export class TenantController {
     this.logger.debug("Request for creating a tenats", req.body);
 
     const result = validationResult(req);
-   
 
     if (!result.isEmpty()) {
       return res.status(400).json({ error: result.array() });
@@ -100,7 +99,7 @@ export class TenantController {
 
   async destroy(req: Request, res: Response, next: NextFunction) {
     console.log("Inside destroy method ");
-    
+
     try {
       const tenantId = Number(req.params.id);
       if (isNaN(tenantId)) {

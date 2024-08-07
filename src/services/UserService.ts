@@ -12,7 +12,14 @@ export class UserService {
     private logger: Logger,
   ) {}
 
-  async create({ firstName, lastName, email, password,role = Roles.CUSTOMER,tenantId }: UserData) {
+  async create({
+    firstName,
+    lastName,
+    email,
+    password,
+    role = Roles.CUSTOMER,
+    tenantId,
+  }: UserData) {
     this.logger.debug("inside user service");
     const saltRound = 10;
     const hashPassword = await bcrypt.hash(password, saltRound);

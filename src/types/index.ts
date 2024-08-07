@@ -50,7 +50,7 @@ export interface UpdateUserRequest extends Request {
 }
 
 export interface CreateUserRequest extends Request {
-  body:UserData
+  body: UserData;
 }
 
 export interface UserQueryParams {

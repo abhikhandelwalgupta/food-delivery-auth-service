@@ -16,13 +16,35 @@ const tenantRepository = AppDataSource.getRepository(Tenant);
 const tenantService = new TenantService(tenantRepository);
 const tenantController = new TenantController(tenantService, logger);
 
-
-router.post("/", authenticate as RequestHandler,canAccess([Roles.ADMIN]),  (req, res, next) =>
-    tenantController.create(req, res, next),
+router.post(
+  "/",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  (req, res, next) => tenantController.create(req, res, next),
 );
 
-router.post("/updateTenant/:id", authenticate as RequestHandler, canAccess([Roles.ADMIN]), (req, res, next) => tenantController.update(req, res, next))
-router.delete("/deleteTenant/:id", authenticate as RequestHandler, canAccess([Roles.ADMIN]), (req, res, next) => tenantController.destroy(req, res, next));
-router.get("/getTenants" ,authenticate as RequestHandler,canAccess([Roles.ADMIN]) ,(req,res,next)=> tenantController.getAll(req,res,next));
-router.get("/getTenants/:id" ,authenticate as RequestHandler,canAccess([Roles.ADMIN]) ,(req,res,next)=> tenantController.getAll(req,res,next));
+router.post(
+  "/updateTenant/:id",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  (req, res, next) => tenantController.update(req, res, next),
+);
+router.delete(
+  "/deleteTenant/:id",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  (req, res, next) => tenantController.destroy(req, res, next),
+);
+router.get(
+  "/getTenants",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  (req, res, next) => tenantController.getAll(req, res, next),
+);
+router.get(
+  "/getTenants/:id",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  (req, res, next) => tenantController.getAll(req, res, next),
+);
 export default router;
