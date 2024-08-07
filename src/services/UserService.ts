@@ -10,7 +10,7 @@ export class UserService {
   constructor(
     private userRepository: Repository<User>,
     private logger: Logger,
-  ) { }
+  ) {}
 
   async create({
     firstName,
@@ -57,10 +57,9 @@ export class UserService {
       const searchTerm = `%${validatedQuery.q}%`;
       queryBuilder.where(
         new Brackets((qb) => {
-          qb.where(
-            "CONCAT(user.firstName, ' ', user.lastName) ILike :q",
-            { q: searchTerm },
-          ).orWhere("user.email ILike :q", { q: searchTerm });
+          qb.where("CONCAT(user.firstName, ' ', user.lastName) ILike :q", {
+            q: searchTerm,
+          }).orWhere("user.email ILike :q", { q: searchTerm });
         }),
       );
     }
@@ -89,7 +88,10 @@ export class UserService {
     return await this.userRepository.delete(userId);
   }
 
-  async update(userId:number, { firstName, lastName, role, email, tenantId }: LimitedUserData,) {
+  async update(
+    userId: number,
+    { firstName, lastName, role, email, tenantId }: LimitedUserData,
+  ) {
     try {
       return await this.userRepository.update(userId, {
         firstName,
@@ -97,13 +99,13 @@ export class UserService {
         role,
         email,
         tenant: tenantId ? { id: tenantId } : null,
-    });
+      });
     } catch (err) {
       const error = createHttpError(
         500,
         "Failed to update the user in the database",
-    );
-    throw error;
+      );
+      throw error;
     }
   }
 }
