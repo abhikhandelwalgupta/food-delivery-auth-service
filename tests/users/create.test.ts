@@ -40,7 +40,7 @@ describe("POST create/user", () => {
       const userData = {
         firstName: "Abhishek",
         lastName: "Khandelwal",
-        email: "abhishekkhandelwal1212+1@gmail.com",
+        email: "abhishekkhandelwal1212+2@gmail.com",
         password: "abhishek",
         tenant: tenant.id,
         role: Roles.MANAGER,
