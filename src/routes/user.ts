@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import express, { NextFunction, Request, RequestHandler, Response } from "express";
+import express, {
+  NextFunction,
+  Request,
+  RequestHandler,
+  Response,
+} from "express";
 
 import { UserController } from "../controllter/UserController";
 import authenticate from "../middlewares/authenticate";
@@ -25,41 +30,40 @@ router.post(
   canAccess([Roles.ADMIN, Roles.MANAGER]),
   (req, res, next) => {
     userController.create(req, res, next);
-  },);
-  router.patch(
-    "/:id",
-    authenticate as RequestHandler,
-    canAccess([Roles.ADMIN]),
-    updateUserValidator,
-    (req: UpdateUserRequest, res: Response, next: NextFunction) =>
-        userController.update(req, res, next) as unknown as RequestHandler,
+  },
+);
+router.patch(
+  "/:id",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  updateUserValidator,
+  (req: UpdateUserRequest, res: Response, next: NextFunction) =>
+    userController.update(req, res, next) as unknown as RequestHandler,
 );
 
 router.get(
-    "/",
-    authenticate as RequestHandler,
-    canAccess([Roles.ADMIN]),
-    listUsersValidator,
-    (req: Request, res: Response, next: NextFunction) =>
-        userController.getAll(req, res, next) as unknown as RequestHandler,
+  "/",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  listUsersValidator,
+  (req: Request, res: Response, next: NextFunction) =>
+    userController.getAll(req, res, next) as unknown as RequestHandler,
 );
 
 router.get(
-    "/:id",
-    authenticate as RequestHandler,
-    canAccess([Roles.ADMIN]),
-    (req, res, next) =>
-        userController.getOne(req, res, next) as unknown as RequestHandler,
+  "/:id",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  (req, res, next) =>
+    userController.getOne(req, res, next) as unknown as RequestHandler,
 );
 
 router.delete(
-    "/:id",
-    authenticate as RequestHandler,
-    canAccess([Roles.ADMIN]),
-    (req, res, next) =>
-        userController.destroy(req, res, next) as unknown as RequestHandler,
+  "/:id",
+  authenticate as RequestHandler,
+  canAccess([Roles.ADMIN]),
+  (req, res, next) =>
+    userController.destroy(req, res, next) as unknown as RequestHandler,
 );
-
-
 
 export default router;
